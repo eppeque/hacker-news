@@ -20,11 +20,16 @@ async function fetchStory(id) {
   }
 }
 
-export async function load() {
-  let ids = await fetchIds();
-  ids = ids.slice(0, 20);
-
+export function load() {
   return {
-    stories: Promise.all(ids.map(async (id) => await fetchStory(id))),
+    streamed: {
+      stories: new Promise((res, rej) => {
+        fetchIds()
+          .then((ids) =>
+            Promise.all(ids.slice(0, 20).map((id) => fetchStory(id)))
+          )
+          .then((stories) => res(stories));
+      }),
+    },
   };
 }
