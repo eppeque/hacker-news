@@ -1,22 +1,2 @@
-<script>
-  import Story from "./Story.svelte";
-
-  export let data;
-</script>
-
-<h1 class="py-2 text-5xl text-orange-600">Top Stories</h1>
-{#await data.streamed.stories}
-  <ul class="py-2">
-    {#each { length: 20 } as _}
-      <li
-        class="animate-pulse my-5 p-10 bg-slate-200 rounded-lg flex gap-5 items-center"
-      />
-    {/each}
-  </ul>
-{:then stories}
-  <ul class="py-2">
-    {#each stories as story, i (story.id)}
-      <Story {story} number={i + 1} />
-    {/each}
-  </ul>
-{/await}
+<h1>Welcome to SvelteKit</h1>
+<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
