@@ -12,7 +12,7 @@ export async function load({ cookies }) {
 
   if (res.ok) {
     const json = await res.json();
-    cookies.set("token", json.token, { path: "/" });
+    cookies.set("token", json.token, { path: "/", secure: false });
     return { success: true, user: json.record };
   }
 }

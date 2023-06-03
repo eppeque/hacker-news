@@ -29,7 +29,7 @@ export const actions = {
     const json = await res.json();
 
     if (res.ok) {
-      cookies.set("token", json.token, { path: "/" });
+      cookies.set("token", json.token, { path: "/", secure: false });
       throw redirect(303, "/");
     } else {
       if (!error) error = json.message;

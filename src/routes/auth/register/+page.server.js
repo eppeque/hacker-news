@@ -36,7 +36,10 @@ export const actions = {
     const json = await res.json();
 
     if (res.ok) {
-      cookies.set("token", await getUserToken(email, password), { path: "/" });
+      cookies.set("token", await getUserToken(email, password), {
+        path: "/",
+        secure: false,
+      });
       throw redirect(303, "/");
     } else if (res.status === 400) {
       if (!error) error = json.message;
