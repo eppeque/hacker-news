@@ -24,12 +24,12 @@
   <title>Sign In - Hacker News</title>
 </svelte:head>
 
-<div class="p-10 shadow-xl rounded-lg">
-  <h1 class="py-2 text-5xl lg:text-6xl text-orange-600">Sign In</h1>
+<div class="p-10 shadow-xl rounded-xl">
+  <h1 class="py-2 text-5xl xl:text-6xl text-orange-600">Sign In</h1>
 
   <form class="py-4 flex flex-col" on:submit|preventDefault={login}>
     {#if error}
-      <p class="py-2 text-red-700 text-lg">
+      <p class="py-2 text-red-700 text-xl">
         <span class="inline-flex align-middle material-icons">error</span>
         {error}
       </p>

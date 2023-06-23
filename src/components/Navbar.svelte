@@ -9,47 +9,70 @@
 
   function signOut() {
     pb.authStore.clear();
+    toggleLinks();
   }
 </script>
 
-<nav class="py-10 lg:flex lg:justify-between lg:items-center">
-  <div class="flex justify-between">
-    <h2 class="text-lg lg:text-xl">Hacker News</h2>
+<nav class="py-10 xl:flex xl:justify-between xl:items-center">
+  <div class="flex justify-between items-center xl:block">
+    <h2 class="text-xl xl:text-xl">Hacker News</h2>
 
-    <button class="lg:hidden material-icons" on:click={toggleLinks}>menu</button
+    <button class="material-icons xl:hidden" on:click={toggleLinks}>menu</button
     >
   </div>
 
+  <div
+    class="fixed inset-0 backdrop-blur-sm xl:backdrop-blur-none"
+    class:hidden={!showLinks}
+  />
+
   <ul
-    class={`lg:flex lg:flex-row lg:items-center lg:gap-10 ${
-      showLinks ? "py-4 flex flex-col gap-3" : "hidden"
+    class={`xl:static xl:flex xl:items-center xl:gap-10 xl:shadow-none xl:bg-transparent xl:rounded-none xl:max-w-fit ${
+      showLinks
+        ? "fixed top-4 right-4 p-5 shadow-2xl rounded-md bg-white w-full max-w-xs"
+        : "hidden"
     }`}
   >
-    <li>
-      <a href="/" class="hover:text-orange-600 hover:underline">Top Stories</a>
+    <li class="text-right">
+      <button
+        class="fixed top-10 right-10 material-icons xl:hidden"
+        on:click={toggleLinks}>close</button
+      >
     </li>
-    <li>
-      <a href="/?type=new" class="hover:text-orange-600 hover:underline"
-        >New Stories</a
+    <li class="py-2 xl:py-0">
+      <a
+        href="/"
+        class="hover:text-orange-600 hover:underline"
+        on:click={toggleLinks}>Top Stories</a
+      >
+    </li>
+    <li class="py-2 xl:py-0">
+      <a
+        href="/?type=new"
+        class="hover:text-orange-600 hover:underline"
+        on:click={toggleLinks}>New Stories</a
       >
     </li>
     {#if $user}
-      <button
-        class="py-2 px-4 bg-orange-500 text-white rounded-md"
-        on:click={signOut}>Sign out</button
-      >
-    {:else}
-      <div class="lg:w-1" />
-      <li>
-        <a href="/auth/sign-in" class="hover:text-orange-600 hover:underline"
-          >Sign In</a
+      <li class="py-2 mt-1 xl:py-0 xl:mt-0">
+        <button
+          class="py-2 px-4 bg-orange-500 text-white rounded-md"
+          on:click={signOut}>Sign out</button
         >
       </li>
-      <li class="my-2 lg:my-0">
+    {:else}
+      <li class="py-2 mt-2 xl:mt-0 xl:py-0 xl:ml-6">
+        <a
+          href="/auth/sign-in"
+          class="hover:text-orange-600 hover:underline"
+          on:click={toggleLinks}>Sign In</a
+        >
+      </li>
+      <li class="py-2 xl:py-0">
         <a
           href="/auth/sign-up"
-          class="py-2 px-4 bg-gradient-to-r from-orange-500 to-yellow-500 rounded-md text-white hover:from-orange-600 hover:to-yellow-600"
-          >Sign Up</a
+          class="py-2 px-4 bg-gradient-to-r from-orange-500 to-yellow-500 text-white rounded-md"
+          on:click={toggleLinks}>Sign Up</a
         >
       </li>
     {/if}

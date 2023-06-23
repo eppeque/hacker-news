@@ -63,11 +63,11 @@
   <title>Sign Up - Hacker News</title>
 </svelte:head>
 
-<h1 class="py-2 text-5xl lg:text-6xl text-orange-600">Sign Up</h1>
+<h1 class="py-2 text-5xl xl:text-6xl text-orange-600">Sign Up</h1>
 
 <form class="py-2 flex flex-col" on:submit|preventDefault={submit}>
   {#if error}
-    <p class="py-2 text-red-700 text-lg">
+    <p class="py-2 text-red-700 text-xl">
       <span class="inline-flex align-middle material-icons">error</span>
       {error}
     </p>

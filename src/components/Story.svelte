@@ -1,9 +1,10 @@
 <script lang="ts">
+  import { pb, stars, user } from "../pocketbase";
   import type { StoryType } from "../types/StoryType";
 
   export let story: StoryType;
   export let number: number;
-  export let isStarred: boolean | null;
+  $: isStarred = $stars?.map((star) => star.storyId).includes(story.id);
 
   const date = new Date(story.time * 1000);
   const now = new Date(Date.now());
@@ -19,6 +20,28 @@
   } else {
     time = `${Math.round(difference / 86400)} day(s) ago`;
   }
+
+  async function updateStar() {
+    const newStars = $stars!;
+    if (isStarred) {
+      const id = newStars.find((star) => star.storyId === story.id)!.id;
+      await pb.collection("stars").delete(id);
+      newStars.forEach((star, index) => {
+        if (star.id === id) {
+          newStars.splice(index, 1);
+          stars.set(newStars);
+        }
+      });
+    } else {
+      const data = {
+        storyId: story.id,
+        user: $user!.id,
+      };
+      const newStar = await pb.collection("stars").create(data);
+      newStars.push(newStar);
+      stars.set(newStars);
+    }
+  }
 </script>
 
 <li class="p-5 md:p-10 bg-slate-100 rounded-xl">
@@ -29,10 +52,10 @@
         {story.title}
       </h3></a
     >
-    {#if isStarred !== null}
+    {#if $stars !== null}
       <button
         class={`${isStarred ? "text-yellow-500" : ""} material-icons`}
-        on:click>{isStarred ? "star" : "star_outline"}</button
+        on:click={updateStar}>{isStarred ? "star" : "star_outline"}</button
       >
     {/if}
   </div>
