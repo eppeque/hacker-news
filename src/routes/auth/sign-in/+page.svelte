@@ -42,7 +42,7 @@
       id="email"
       required
       bind:value={email}
-      class="outline-none border-2 p-3 rounded-md focus:border-orange-500"
+      class="outline-none border-2 p-3 rounded-md focus:border-orange-500 dark:bg-slate-900"
     />
 
     <label for="password" class="py-2 mt-2">Password</label>
@@ -52,7 +52,7 @@
       id="password"
       required
       bind:value={password}
-      class="outline-none border-2 p-3 rounded-md focus:border-orange-500"
+      class="outline-none border-2 p-3 rounded-md focus:border-orange-500 dark:bg-slate-900"
     />
 
     <input

@@ -1,7 +1,9 @@
-<script>
+<script lang="ts">
+  import { get, type Writable } from "svelte/store";
   import { pb, user } from "../pocketbase";
 
   let showLinks = false;
+  export let darkTheme: Writable<boolean>;
 
   function toggleLinks() {
     showLinks = !showLinks;
@@ -22,14 +24,14 @@
   </div>
 
   <div
-    class="fixed inset-0 backdrop-blur-sm xl:backdrop-blur-none"
+    class="fixed inset-0 backdrop-blur-sm xl:hidden"
     class:hidden={!showLinks}
   />
 
   <ul
-    class={`xl:static xl:flex xl:items-center xl:gap-10 xl:shadow-none xl:bg-transparent xl:rounded-none xl:max-w-fit ${
+    class={`xl:static xl:flex xl:items-center xl:gap-10 xl:shadow-none xl:bg-transparent xl:rounded-none xl:max-w-fit xl:p-0 ${
       showLinks
-        ? "fixed top-4 right-4 p-5 shadow-2xl rounded-md bg-white w-full max-w-xs"
+        ? "fixed top-4 right-4 p-5 shadow-2xl rounded-md bg-white dark:bg-slate-900 w-full max-w-xs"
         : "hidden"
     }`}
   >
@@ -53,7 +55,21 @@
         on:click={toggleLinks}>New Stories</a
       >
     </li>
+    <li class="py-2 xl:py-0">
+      <button
+        class="text-gray-600 dark:text-white material-icons"
+        on:click={() => darkTheme.set(!get(darkTheme))}
+        >{$darkTheme ? "light_mode" : "dark_mode"}</button
+      >
+    </li>
     {#if $user}
+      <li class="py-2 xl:py-0">
+        <a
+          href="/stars"
+          class="hover:text-orange-600 hover:underline"
+          on:click={toggleLinks}>Your Stars</a
+        >
+      </li>
       <li class="py-2 mt-1 xl:py-0 xl:mt-0">
         <button
           class="py-2 px-4 bg-orange-500 text-white rounded-md"

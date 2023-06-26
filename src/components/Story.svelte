@@ -1,5 +1,6 @@
 <script lang="ts">
   import { pb, stars, user } from "../pocketbase";
+  import type { StarType } from "../types/StarType";
   import type { StoryType } from "../types/StoryType";
 
   export let story: StoryType;
@@ -37,14 +38,14 @@
         storyId: story.id,
         user: $user!.id,
       };
-      const newStar = await pb.collection("stars").create(data);
+      const newStar = await pb.collection("stars").create<StarType>(data);
       newStars.push(newStar);
       stars.set(newStars);
     }
   }
 </script>
 
-<li class="p-5 md:p-10 bg-slate-100 rounded-xl">
+<li class="p-5 md:p-10 bg-slate-100 rounded-xl dark:bg-slate-800">
   <div class="flex gap-5 items-center">
     <span class="text-3xl md:text-4xl text-orange-600">{number}.</span>
     <a href={story.url} class="hover:text-orange-600 hover:underline"
