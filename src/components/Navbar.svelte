@@ -1,9 +1,11 @@
 <script lang="ts">
-  import { get, type Writable } from "svelte/store";
   import { pb, user } from "../pocketbase";
+  import { createEventDispatcher } from "svelte";
 
   let showLinks = false;
-  export let darkTheme: Writable<boolean>;
+  export let darkTheme: boolean;
+
+  const dispatcher = createEventDispatcher();
 
   function toggleLinks() {
     showLinks = !showLinks;
@@ -12,6 +14,10 @@
   function signOut() {
     pb.authStore.clear();
     toggleLinks();
+  }
+
+  function switchTheme() {
+    dispatcher("switchTheme");
   }
 </script>
 
@@ -58,8 +64,7 @@
     <li class="py-2 xl:py-0">
       <button
         class="text-gray-600 dark:text-white material-icons"
-        on:click={() => darkTheme.set(!get(darkTheme))}
-        >{$darkTheme ? "light_mode" : "dark_mode"}</button
+        on:click={switchTheme}>{darkTheme ? "light_mode" : "dark_mode"}</button
       >
     </li>
     {#if $user}
